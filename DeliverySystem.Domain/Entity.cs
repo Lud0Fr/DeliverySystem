@@ -15,13 +15,12 @@ namespace DeliverySystem.Domain
 
         protected void New(int? createdBy = null)
         {
-            CreatedAt = DateTime.Now;
             CreatedBy = createdBy;
         }
 
         protected void Update(int? updatedBy = null)
         {
-            UpdatedAt = DateTime.Now;
+            UpdatedAt = DateTime.UtcNow;
             UpdatedBy = updatedBy;
         }
 

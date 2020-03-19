@@ -1,6 +1,10 @@
 ﻿using AutoMapper;
 using DeliverySystem.Api.Mapping;
+using DeliverySystem.Domain.Deliveries;
+using DeliverySystem.Domain.Identities;
+using DeliverySystem.Domain.Identities.Services;
 using DeliverySystem.Infrastructure;
+using DeliverySystem.Infrastructure.Repositories;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -38,6 +42,8 @@ namespace DeliverySystem
             services.AddMediatR(Assembly.GetExecutingAssembly());
 
             ConfigureAutoMapper(services);
+            ConfigureDomainServices(services);
+            ConfigureRepositories(services);
             ConfigureDbContext(services);
         }
 
@@ -65,6 +71,17 @@ namespace DeliverySystem
             });
 
             services.AddSingleton(mappingConfig.CreateMapper());
+        }
+
+        private void ConfigureDomainServices(IServiceCollection services)
+        {
+            services.AddScoped<IIdentityService, IdentityService>();
+        }
+
+        private void ConfigureRepositories(IServiceCollection services)
+        {
+            services.AddScoped<IIdentityRepository, IdentityRepository>();
+            services.AddScoped<IDeliveryRepository, DeliveryRepository>();
         }
 
         private void ConfigureDbContext(IServiceCollection services)

@@ -6,6 +6,8 @@
         public AccessWindow AccessWindow { get; private set; }
         public Recipient Recipient { get; private set; }
         public Order Order { get; private set; }
+        public int UserId { get; private set; }
+        public int PartnerId { get; private set; }
 
         private Delivery() { }
 
@@ -13,11 +15,15 @@
             AccessWindow accessWindow,
             Recipient recipient,
             Order order,
+            int userId,
+            int partnerId,
             int createdBy)
         {
             var delivery = new Delivery
             {
-                AccessWindow = accessWindow
+                AccessWindow = accessWindow,
+                UserId = userId,
+                PartnerId = partnerId
             };
 
             New(createdBy);
