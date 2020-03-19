@@ -23,5 +23,11 @@ namespace DeliverySystem.Domain.Identities
                 Role = role,
             };
         }
+        public Identity WithId(int id)
+        {
+            Id = id;
+
+            return this;
+        }
     }
 }

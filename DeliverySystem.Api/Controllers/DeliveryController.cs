@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 
 namespace DeliverySystem.Api.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class DeliveryController : ApiControllerBase
     {
         public DeliveryController(IMediator mediator)
