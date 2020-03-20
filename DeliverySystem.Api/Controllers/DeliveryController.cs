@@ -40,5 +40,14 @@ namespace DeliverySystem.Api.Controllers
 
             return NoContent();
         }
+
+        [HttpPut("{deliveryId:int}/cancel")]
+        [AuthorizeJwtRole(RoleName.Partner, RoleName.UserConsumerMarket)]
+        public async Task<IActionResult> CancelAsync([FromRoute]int deliveryId)
+        {
+            await HandleAsync(new CancelDeliveryCommand(deliveryId));
+
+            return NoContent();
+        }
     }
 }

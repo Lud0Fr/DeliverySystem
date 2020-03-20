@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace DeliverySystem.Api.CommandHandlers
 {
-    public class CompleteDeliveryCommandHandler : IRequestHandler<CompleteDeliveryCommand>
+    public class CancelDeliveryCommandHandler : IRequestHandler<CancelDeliveryCommand>
     {
         private readonly IDeliveryRepository _deliveryRepository;
         private readonly IExistsDeliverySpecification _existsDelivery;
         private readonly IUserContext _userContext;
         private readonly IUnitOfWork _unitOfWork;
 
-        public CompleteDeliveryCommandHandler(
+        public CancelDeliveryCommandHandler(
             IDeliveryRepository deliveryRepository,
             IExistsDeliverySpecification existsDelivery,
             IUserContext userContext,
@@ -28,12 +28,12 @@ namespace DeliverySystem.Api.CommandHandlers
         }
 
         public async Task<Unit> Handle(
-            CompleteDeliveryCommand request,
+            CancelDeliveryCommand request,
             CancellationToken cancellationToken)
         {
             var delivery = await GetDelivery(request.DeliveryId);
 
-            delivery.Complete(_userContext.UserDetails.Id);
+            delivery.Cancel(_userContext.UserDetails.Id);
 
             _deliveryRepository.Update(delivery);
             await _unitOfWork.SaveAllAsync();
@@ -45,8 +45,11 @@ namespace DeliverySystem.Api.CommandHandlers
         {
             var delivery = await _deliveryRepository.GetAsync(d =>
                 d.Id == deliveryId &&
-                d.PartnerId == _userContext.UserDetails.Id &&
-                d.State == DeliveryState.Approved);
+                _userContext.UserDetails.Role == Role.Partner
+                    ? d.PartnerId == _userContext.UserDetails.Id
+                    : d.UserId == _userContext.UserDetails.Id &&
+                (d.State == DeliveryState.Created ||
+                d.State == DeliveryState.Approved));
 
             _existsDelivery.EnforceRule(delivery, $"Delivery with id {deliveryId} not found");
             return delivery;
