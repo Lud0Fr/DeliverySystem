@@ -31,5 +31,14 @@ namespace DeliverySystem.Api.Controllers
 
             return NoContent();
         }
+
+        [HttpPut("{deliveryId:int}/complete")]
+        [AuthorizeJwtRole(RoleName.Partner)]
+        public async Task<IActionResult> CompleteAsync([FromRoute]int deliveryId)
+        {
+            await HandleAsync(new CompleteDeliveryCommand(deliveryId));
+
+            return NoContent();
+        }
     }
 }
