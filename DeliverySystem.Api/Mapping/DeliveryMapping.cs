@@ -9,6 +9,9 @@ namespace DeliverySystem.Api.Mapping
         public DeliveryMapping()
         {
             CreateMap<Delivery, DeliveryDto>();
+            CreateMap<AccessWindow, AccessWindowDto>();
+            CreateMap<Order, OrderDto>();
+            CreateMap<Recipient, RecipientDto>();
         }
     }
 }

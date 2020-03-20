@@ -28,6 +28,11 @@ namespace DeliverySystem.Infrastructure.Repositories
             _set = entities.Set<T>();
         }
 
+        public async Task<T> GetAsync(int id)
+        {
+            return await _set.FirstOrDefaultAsync(e => e.Id == id);
+        }
+
         public async Task<T> GetAsync(Expression<Func<T, bool>> predicate)
         {
             return await _set.FirstOrDefaultAsync(predicate);

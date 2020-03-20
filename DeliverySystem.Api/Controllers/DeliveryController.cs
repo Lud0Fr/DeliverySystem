@@ -1,4 +1,5 @@
 ﻿using DeliverySystem.Api.Commands;
+using DeliverySystem.Api.Queries;
 using DeliverySystem.Tools.Security;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -10,9 +11,29 @@ namespace DeliverySystem.Api.Controllers
     [ApiController]
     public class DeliveryController : ApiControllerBase
     {
-        public DeliveryController(IMediator mediator)
+        private readonly IDeliveryQueries _deliveryQuery;
+
+        public DeliveryController(
+            IMediator mediator,
+            IDeliveryQueries deliveryQuery)
             : base(mediator)
-        { }
+        {
+            _deliveryQuery = deliveryQuery;
+        }
+
+        [HttpGet()]
+        [AuthorizeJwtRole(RoleName.Admin, RoleName.Partner, RoleName.UserConsumerMarket)]
+        public async Task<IActionResult> GetAllAsync()
+        {
+            return Ok(await _deliveryQuery.GetAllAsync());
+        }
+
+        [HttpGet("{id:int}")]
+        [AuthorizeJwtRole(RoleName.Admin, RoleName.Partner, RoleName.UserConsumerMarket)]
+        public async Task<IActionResult> GetAsync([FromRoute]int id)
+        {
+            return Ok(await _deliveryQuery.GetAsync(id));
+        }
 
         [HttpPost]
         [AuthorizeJwtRole(RoleName.Admin)]

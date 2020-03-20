@@ -2,6 +2,7 @@
 using DeliverySystem.Api.Commands;
 using DeliverySystem.Api.CommandValidators;
 using DeliverySystem.Api.Mapping;
+using DeliverySystem.Api.Queries;
 using DeliverySystem.Domain.Deliveries;
 using DeliverySystem.Domain.Identities;
 using DeliverySystem.Domain.Identities.Services;
@@ -60,6 +61,7 @@ namespace DeliverySystem
             ConfigureAuthenticationAndAuthorization(services);
             ConfigureSecurity(services);
             ConfigureAutoMapper(services);
+            ConfigureQueries(services);
             ConfigureDomainEvents(services);
             ConfigureDomainServices(services);
             ConfigureValidators(services);
@@ -95,6 +97,11 @@ namespace DeliverySystem
             });
 
             services.AddSingleton(mappingConfig.CreateMapper());
+        }
+
+        private void ConfigureQueries(IServiceCollection services)
+        {
+            services.AddScoped<IDeliveryQueries, DeliveryQueries>();
         }
 
         private void ConfigureAuthenticationAndAuthorization(IServiceCollection services)
