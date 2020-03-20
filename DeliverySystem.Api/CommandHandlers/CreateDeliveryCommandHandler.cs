@@ -1,4 +1,7 @@
 ﻿using DeliverySystem.Api.Commands;
+using DeliverySystem.Domain.Deliveries;
+using DeliverySystem.Infrastructure;
+using DeliverySystem.Tools.Security;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
@@ -7,15 +10,33 @@ namespace DeliverySystem.Api.CommandHandlers
 {
     public class CreateDeliveryCommandHandler : AsyncRequestHandler<CreateDeliveryCommand>
     {
-        public CreateDeliveryCommandHandler()
+        private readonly IDeliveryRepository _deliveryRepository;
+        private readonly IUserContext _userContext;
+        private readonly IUnitOfWork _unitOfWork;
+
+        public CreateDeliveryCommandHandler(
+            IDeliveryRepository deliveryRepository,
+            IUserContext userContext,
+            IUnitOfWork unitOfWork)
         {
+            _deliveryRepository = deliveryRepository;
+            _userContext = userContext;
+            _unitOfWork = unitOfWork;
         }
 
         protected override async Task Handle(
             CreateDeliveryCommand request,
             CancellationToken cancellationToken)
         {
-            throw new System.NotImplementedException();
+            _deliveryRepository.Add(Delivery.New(
+                new AccessWindow(request.AccessWindow.StartTime, request.AccessWindow.EndTime),
+                new Recipient(request.Recipient.Name, request.Recipient.Address, request.Recipient.Email, request.Recipient.PhoneNumber),
+                new Order(request.Order.OrderNumber, request.Order.Sender),
+                request.UserId,
+                request.PartnerId,
+                _userContext.UserDetails.Id));
+
+            await _unitOfWork.SaveAllAsync();
         }
     }
 }

@@ -13,7 +13,7 @@ namespace DeliverySystem.Domain.Deliveries
 
         private Delivery() { }
 
-        public Delivery New(
+        public static Delivery New(
             AccessWindow accessWindow,
             Recipient recipient,
             Order order,
@@ -24,11 +24,13 @@ namespace DeliverySystem.Domain.Deliveries
             var delivery = new Delivery
             {
                 AccessWindow = accessWindow,
+                Order = order,
+                Recipient = recipient,
                 UserId = userId,
                 PartnerId = partnerId
             };
 
-            New(createdBy);
+            delivery.New(createdBy);
 
             return delivery;
         }

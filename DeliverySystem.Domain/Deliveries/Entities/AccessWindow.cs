@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace DeliverySystem.Domain.Deliveries
 {
+    [Owned]
     public class AccessWindow
     {
         public DateTime StartTime { get; private set; }

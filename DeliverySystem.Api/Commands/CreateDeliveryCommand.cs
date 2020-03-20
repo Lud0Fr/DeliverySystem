@@ -8,5 +8,7 @@ namespace DeliverySystem.Api.Commands
         public AccessWindowDto AccessWindow { get; set; }
         public RecipientDto Recipient { get; set; }
         public OderDto Order { get; set; }
+        public int UserId { get; set; }
+        public int PartnerId { get; set; }
     }
 }

@@ -1,6 +1,8 @@
-﻿namespace DeliverySystem.Domain.Deliveries
+﻿using DeliverySystem.Tools.Infrastructure;
+
+namespace DeliverySystem.Domain.Deliveries
 {
-    public interface IDeliveryRepository
+    public interface IDeliveryRepository : IRepository<Delivery>
     {
     }
 }

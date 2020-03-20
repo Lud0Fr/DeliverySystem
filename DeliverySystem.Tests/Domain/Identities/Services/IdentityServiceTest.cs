@@ -1,6 +1,7 @@
 ﻿using DeliverySystem.Domain.Identities;
 using DeliverySystem.Domain.Identities.Services;
 using DeliverySystem.Tools;
+using DeliverySystem.Tools.Security;
 using Xunit;
 
 namespace DeliverySystem.Tests.Domain.Identities.Services

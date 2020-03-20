@@ -8,6 +8,7 @@ using DeliverySystem.Domain.Identities.Services;
 using DeliverySystem.Infrastructure;
 using DeliverySystem.Infrastructure.Repositories;
 using DeliverySystem.Tools;
+using DeliverySystem.Tools.Domain;
 using DeliverySystem.Tools.Security;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -55,15 +56,18 @@ namespace DeliverySystem
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddFluentValidation();
 
-            services.AddMediatR(Assembly.GetExecutingAssembly());
 
             ConfigureAuthenticationAndAuthorization(services);
             ConfigureSecurity(services);
             ConfigureAutoMapper(services);
+            ConfigureDomainEvents(services);
             ConfigureDomainServices(services);
             ConfigureValidators(services);
-            ConfigureSpecifications(services);
             ConfigureRepositories(services);
+            ConfigureSpecifications(services);
+
+            services.AddMediatR(Assembly.GetExecutingAssembly());
+
             ConfigureDbContext(services);
         }
 
@@ -132,6 +136,11 @@ namespace DeliverySystem
             services.AddSingleton<IUserContext, UserContext>();
         }
 
+        private void ConfigureDomainEvents(IServiceCollection services)
+        {
+            services.AddScoped<IEventBus, EventBus>();
+        }
+
         private void ConfigureDomainServices(IServiceCollection services)
         {
             services.AddScoped<IIdentityService, IdentityService>();
@@ -150,6 +159,7 @@ namespace DeliverySystem
 
         private void ConfigureRepositories(IServiceCollection services)
         {
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IIdentityRepository, IdentityRepository>();
             services.AddScoped<IDeliveryRepository, DeliveryRepository>();
         }

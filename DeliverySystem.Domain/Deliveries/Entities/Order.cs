@@ -1,5 +1,8 @@
-﻿namespace DeliverySystem.Domain.Deliveries
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace DeliverySystem.Domain.Deliveries
 {
+    [Owned]
     public class Order
     {
         public string OrderNumber { get; private set; }

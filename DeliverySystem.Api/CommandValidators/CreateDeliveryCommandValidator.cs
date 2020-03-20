@@ -13,7 +13,7 @@ namespace DeliverySystem.Api.CommandValidators
             RuleFor(r => r.AccessWindow.StartTime).GreaterThan(DateTime.Now)
                 .When(r => r.AccessWindow != null);
 
-            RuleFor(r => r.AccessWindow.EndTime).GreaterThan(r => r.AccessWindow.EndTime)
+            RuleFor(r => r.AccessWindow.EndTime).GreaterThan(r => r.AccessWindow.StartTime)
                 .When(r => r.AccessWindow != null);
 
             RuleFor(r => r.Recipient).NotNull();
@@ -55,6 +55,9 @@ namespace DeliverySystem.Api.CommandValidators
 
             RuleFor(r => r.Order.Sender).MaximumLength(100)
                 .When(r => r.Order != null);
+
+            RuleFor(r => r.UserId).GreaterThan(0);
+            RuleFor(r => r.PartnerId).GreaterThan(0);
         }
     }
 }

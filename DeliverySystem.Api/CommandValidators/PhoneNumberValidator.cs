@@ -13,7 +13,7 @@ namespace DeliverySystem.Api.CommandValidators
         {
             var phoneNumber = (string)context.PropertyValue;
 
-            return phoneNumber.StartsWith("+44") && Regex.Replace(phoneNumber, @"[^0-9]+", "").Length == 11;
+            return phoneNumber.StartsWith("+44") && Regex.Replace(phoneNumber, @"[^0-9]+", "").Length == 12;
         }
     }
 }

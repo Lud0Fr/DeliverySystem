@@ -2,16 +2,16 @@
 {
     public class UserDetails
     {
-        public int IdentityId { get; set; }
+        public int Id { get; set; }
         public Role Role { get; set; }
 
         public static UserDetails New(
-            int identityId,
+            int id,
             Role role)
         {
             return new UserDetails
             {
-                IdentityId = identityId,
+                Id = id,
                 Role = role,
             };
         }
