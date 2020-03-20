@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using System.Collections.Generic;
 
-namespace DeliverySystem.Domain
+namespace DeliverySystem.Tools.Domain
 {
     public class AggregateRoot : Entity
     {

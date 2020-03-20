@@ -1,10 +1,10 @@
-﻿using DeliverySystem.Domain;
+﻿using DeliverySystem.Tools.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace DeliverySystem.Infrastructure.Repositories
+namespace DeliverySystem.Tools.Infrastructure
 {
     public interface IRepository<TAggregateRoot> where TAggregateRoot : AggregateRoot
     {

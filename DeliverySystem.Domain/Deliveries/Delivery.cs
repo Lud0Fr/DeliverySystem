@@ -1,4 +1,6 @@
-﻿namespace DeliverySystem.Domain.Deliveries
+﻿using DeliverySystem.Tools.Domain;
+
+namespace DeliverySystem.Domain.Deliveries
 {
     public class Delivery : AggregateRoot
     {

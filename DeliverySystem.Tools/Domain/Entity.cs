@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DeliverySystem.Domain
+namespace DeliverySystem.Tools.Domain
 {
     public class Entity
     {

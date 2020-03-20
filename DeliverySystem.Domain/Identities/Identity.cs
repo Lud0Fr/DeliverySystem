@@ -1,4 +1,5 @@
 ﻿using DeliverySystem.Tools;
+using DeliverySystem.Tools.Domain;
 
 namespace DeliverySystem.Domain.Identities
 {

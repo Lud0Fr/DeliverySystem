@@ -12,11 +12,9 @@ namespace DeliverySystem.Tests.Domain.Identities.Services
         {
             // Arrange
             var identity = Identity.New("email@domain.com", "password", Role.Admin);
-
-            // Act
             var sut = new IdentityService(new JwtConfiguration(), Configuration);
+            // Act
             var jwt = sut.GenerateJWT(identity);
-
             // Asset
             Assert.NotEmpty(jwt);
         }

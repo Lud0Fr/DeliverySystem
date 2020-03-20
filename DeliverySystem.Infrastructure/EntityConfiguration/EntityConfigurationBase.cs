@@ -1,4 +1,4 @@
-﻿using DeliverySystem.Domain;
+﻿using DeliverySystem.Tools.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

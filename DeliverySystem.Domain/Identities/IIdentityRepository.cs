@@ -1,6 +1,8 @@
-﻿namespace DeliverySystem.Domain.Identities
+﻿using DeliverySystem.Tools.Infrastructure;
+
+namespace DeliverySystem.Domain.Identities
 {
-    public interface IIdentityRepository
+    public interface IIdentityRepository : IRepository<Identity>
     {
     }
 }

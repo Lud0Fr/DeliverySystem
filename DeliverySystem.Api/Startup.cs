@@ -1,10 +1,14 @@
 ﻿using AutoMapper;
+using DeliverySystem.Api.Commands;
+using DeliverySystem.Api.CommandValidators;
 using DeliverySystem.Api.Mapping;
 using DeliverySystem.Domain.Deliveries;
 using DeliverySystem.Domain.Identities;
 using DeliverySystem.Domain.Identities.Services;
 using DeliverySystem.Infrastructure;
 using DeliverySystem.Infrastructure.Repositories;
+using DeliverySystem.Tools;
+using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -41,8 +45,11 @@ namespace DeliverySystem
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddMediatR(Assembly.GetExecutingAssembly());
 
+            ConfigureSecurity(services);
             ConfigureAutoMapper(services);
             ConfigureDomainServices(services);
+            ConfigureValidators(services);
+            ConfigureSpecifications(services);
             ConfigureRepositories(services);
             ConfigureDbContext(services);
         }
@@ -73,9 +80,29 @@ namespace DeliverySystem
             services.AddSingleton(mappingConfig.CreateMapper());
         }
 
+        private void ConfigureSecurity(IServiceCollection services)
+        {
+            var jwtConfig = new JwtConfiguration();
+            Configuration.Bind("JWT", jwtConfig);
+            services.AddSingleton(jwtConfig);
+
+            //services.AddSingleton<IUserContext, UserContext>();
+        }
+
         private void ConfigureDomainServices(IServiceCollection services)
         {
             services.AddScoped<IIdentityService, IdentityService>();
+        }
+
+        private void ConfigureValidators(IServiceCollection services)
+        {
+            services.AddScoped<IValidator<SignInCommand>, SignInCommandValidator>();
+            services.AddScoped<IValidator<CreateDeliveryCommand>, CreateDeliveryCommandValidator>();
+        }
+
+        private void ConfigureSpecifications(IServiceCollection services)
+        {
+            services.AddScoped<IExistsIdentitySpecification, ExistsIdentitySpecification>();
         }
 
         private void ConfigureRepositories(IServiceCollection services)
