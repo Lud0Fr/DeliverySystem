@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DeliverySystem.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200319233626_Init")]
+    [Migration("20200320213554_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -117,10 +117,10 @@ namespace DeliverySystem.Infrastructure.Migrations
                                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                             b1.Property<DateTime>("EndTime")
-                                .HasColumnName("EndTime");
+                                .HasColumnName("AccessWindowEnd");
 
                             b1.Property<DateTime>("StartTime")
-                                .HasColumnName("AccessWindow");
+                                .HasColumnName("AccessWindowStart");
 
                             b1.HasKey("DeliveryId");
 
@@ -161,16 +161,16 @@ namespace DeliverySystem.Infrastructure.Migrations
                                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                             b1.Property<string>("Address")
-                                .HasColumnName("Address");
+                                .HasColumnName("RecipientAddress");
 
                             b1.Property<string>("Email")
-                                .HasColumnName("Email");
+                                .HasColumnName("RecipientEmail");
 
                             b1.Property<string>("Name")
-                                .HasColumnName("Name");
+                                .HasColumnName("RecipientName");
 
                             b1.Property<string>("PhoneNumber")
-                                .HasColumnName("PhoneNumber");
+                                .HasColumnName("RecipientPhoneNumber");
 
                             b1.HasKey("DeliveryId");
 

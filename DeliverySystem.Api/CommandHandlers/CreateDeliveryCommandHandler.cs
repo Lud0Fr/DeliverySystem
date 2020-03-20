@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DeliverySystem.Api.CommandHandlers
 {
-    public class CreateDeliveryCommandHandler : IRequestHandler<CreateDeliveryCommand>
+    public class CreateDeliveryCommandHandler : IRequestHandler<CreateDeliveryCommand, int>
     {
         private readonly IDeliveryRepository _deliveryRepository;
         private readonly IUserContext _userContext;
@@ -24,21 +24,23 @@ namespace DeliverySystem.Api.CommandHandlers
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Unit> Handle(
+        public async Task<int> Handle(
             CreateDeliveryCommand request,
             CancellationToken cancellationToken)
         {
-            _deliveryRepository.Add(Delivery.New(
+            var delivery = Delivery.New(
                 new AccessWindow(request.AccessWindow.StartTime, request.AccessWindow.EndTime),
                 new Recipient(request.Recipient.Name, request.Recipient.Address, request.Recipient.Email, request.Recipient.PhoneNumber),
                 new Order(request.Order.OrderNumber, request.Order.Sender),
                 request.UserId,
                 request.PartnerId,
-                _userContext.UserDetails.Id));
+                _userContext.UserDetails.Id);
+
+            _deliveryRepository.Add(delivery);
 
             await _unitOfWork.SaveAllAsync();
 
-            return Unit.Value;
+            return delivery.Id;
         }
     }
 }

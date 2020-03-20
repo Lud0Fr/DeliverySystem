@@ -11,14 +11,14 @@ namespace DeliverySystem.Infrastructure.EntityConfiguration
             builder.ToTable("Deliveries");
 
             var accessWindow = builder.OwnsOne(d => d.AccessWindow);
-            accessWindow.Property(a => a.StartTime).HasColumnName("AccessWindow");
-            accessWindow.Property(a => a.EndTime).HasColumnName("EndTime");
+            accessWindow.Property(a => a.StartTime).HasColumnName("AccessWindowStart");
+            accessWindow.Property(a => a.EndTime).HasColumnName("AccessWindowEnd");
 
             var recipient = builder.OwnsOne(d => d.Recipient);
-            recipient.Property(r => r.Address).HasColumnName("Address");
-            recipient.Property(r => r.Email).HasColumnName("Email");
-            recipient.Property(r => r.Name).HasColumnName("Name");
-            recipient.Property(r => r.PhoneNumber).HasColumnName("PhoneNumber");
+            recipient.Property(r => r.Address).HasColumnName("RecipientAddress");
+            recipient.Property(r => r.Email).HasColumnName("RecipientEmail");
+            recipient.Property(r => r.Name).HasColumnName("RecipientName");
+            recipient.Property(r => r.PhoneNumber).HasColumnName("RecipientPhoneNumber");
 
             var order = builder.OwnsOne(d => d.Order);
             order.Property(o => o.OrderNumber).HasColumnName("OrderNumber");

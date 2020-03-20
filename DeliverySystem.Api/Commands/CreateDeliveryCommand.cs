@@ -3,7 +3,7 @@ using MediatR;
 
 namespace DeliverySystem.Api.Commands
 {
-    public class CreateDeliveryCommand : IRequest
+    public class CreateDeliveryCommand : IRequest<int>
     {
         public AccessWindowDto AccessWindow { get; set; }
         public RecipientDto Recipient { get; set; }

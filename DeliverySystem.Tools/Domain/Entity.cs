@@ -24,7 +24,7 @@ namespace DeliverySystem.Tools.Domain
             UpdatedBy = updatedBy;
         }
 
-        protected void Delete(int? deletedBy = null)
+        public void Delete(int? deletedBy = null)
         {
             IsDeleted = true;
             Update(deletedBy);

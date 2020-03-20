@@ -1,4 +1,5 @@
-﻿using DeliverySystem.Tools.Domain;
+﻿using System;
+using DeliverySystem.Tools.Domain;
 
 namespace DeliverySystem.Domain.Deliveries
 {

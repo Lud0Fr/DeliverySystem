@@ -39,9 +39,7 @@ namespace DeliverySystem.Api.Controllers
         [AuthorizeJwtRole(RoleName.Admin)]
         public async Task<IActionResult> CreateAsync([FromBody]CreateDeliveryCommand command)
         {
-            await HandleAsync(command);
-
-            return NoContent();
+            return Ok(await HandleAsync(command));
         }
 
         [HttpPut("{deliveryId:int}/approve")]
@@ -67,6 +65,15 @@ namespace DeliverySystem.Api.Controllers
         public async Task<IActionResult> CancelAsync([FromRoute]int deliveryId)
         {
             await HandleAsync(new CancelDeliveryCommand(deliveryId));
+
+            return NoContent();
+        }
+
+        [HttpDelete("{deliveryId:int}")]
+        [AuthorizeJwtRole(RoleName.Admin)]
+        public async Task<IActionResult> DeleteAsync([FromRoute]int deliveryId)
+        {
+            await HandleAsync(new DeleteDeliveryCommand(deliveryId));
 
             return NoContent();
         }

@@ -115,10 +115,10 @@ namespace DeliverySystem.Infrastructure.Migrations
                                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                             b1.Property<DateTime>("EndTime")
-                                .HasColumnName("EndTime");
+                                .HasColumnName("AccessWindowEnd");
 
                             b1.Property<DateTime>("StartTime")
-                                .HasColumnName("AccessWindow");
+                                .HasColumnName("AccessWindowStart");
 
                             b1.HasKey("DeliveryId");
 
@@ -159,16 +159,16 @@ namespace DeliverySystem.Infrastructure.Migrations
                                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                             b1.Property<string>("Address")
-                                .HasColumnName("Address");
+                                .HasColumnName("RecipientAddress");
 
                             b1.Property<string>("Email")
-                                .HasColumnName("Email");
+                                .HasColumnName("RecipientEmail");
 
                             b1.Property<string>("Name")
-                                .HasColumnName("Name");
+                                .HasColumnName("RecipientName");
 
                             b1.Property<string>("PhoneNumber")
-                                .HasColumnName("PhoneNumber");
+                                .HasColumnName("RecipientPhoneNumber");
 
                             b1.HasKey("DeliveryId");
 
