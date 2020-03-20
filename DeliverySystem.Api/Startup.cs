@@ -8,17 +8,25 @@ using DeliverySystem.Domain.Identities.Services;
 using DeliverySystem.Infrastructure;
 using DeliverySystem.Infrastructure.Repositories;
 using DeliverySystem.Tools;
+using DeliverySystem.Tools.Security;
 using FluentValidation;
+using FluentValidation.AspNetCore;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using System;
 using System.Reflection;
+using System.Security.Principal;
+using System.Text;
 
 namespace DeliverySystem
 {
@@ -42,9 +50,14 @@ namespace DeliverySystem
         public void ConfigureServices(IServiceCollection services)
         {
 			services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog(dispose: true));
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+                .AddFluentValidation();
+
             services.AddMediatR(Assembly.GetExecutingAssembly());
 
+            ConfigureAuthenticationAndAuthorization(services);
             ConfigureSecurity(services);
             ConfigureAutoMapper(services);
             ConfigureDomainServices(services);
@@ -80,13 +93,43 @@ namespace DeliverySystem
             services.AddSingleton(mappingConfig.CreateMapper());
         }
 
+        private void ConfigureAuthenticationAndAuthorization(IServiceCollection services)
+        {
+            services.AddHttpContextAccessor();
+            services.AddTransient<IPrincipal>(provider => provider.GetService<IHttpContextAccessor>().HttpContext.User);
+
+            services
+                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(JwtOptions =>
+                {
+                    JwtOptions.RequireHttpsMetadata = false;
+                    JwtOptions.SaveToken = true;
+                    JwtOptions.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(
+                            Encoding.ASCII.GetBytes(Configuration.GetSection("Jwt:Key").Value)),
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
+                        RequireExpirationTime = true,
+                    };
+                });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(UserRolesRequirement.PolicyKey, policy => policy.Requirements.Add(new UserRolesRequirement()));
+            });
+
+            services.AddSingleton<IAuthorizationHandler, UserRolesRequirementHandler>();
+        }
+
         private void ConfigureSecurity(IServiceCollection services)
         {
             var jwtConfig = new JwtConfiguration();
             Configuration.Bind("JWT", jwtConfig);
             services.AddSingleton(jwtConfig);
 
-            //services.AddSingleton<IUserContext, UserContext>();
+            services.AddSingleton<IUserContext, UserContext>();
         }
 
         private void ConfigureDomainServices(IServiceCollection services)

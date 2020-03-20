@@ -1,4 +1,4 @@
-﻿namespace DeliverySystem.Domain.Identities
+﻿namespace DeliverySystem.Tools.Security
 {
     public enum Role
     {

@@ -1,4 +1,5 @@
 ﻿using DeliverySystem.Api.Commands;
+using DeliverySystem.Tools.Security;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -13,8 +14,8 @@ namespace DeliverySystem.Api.Controllers
             : base(mediator)
         { }
 
-        // TODO add authorization
         [HttpPost]
+        [AuthorizeJwtRole(RoleName.Admin)]
         public async Task<IActionResult> CreateAsync([FromBody]CreateDeliveryCommand command)
         {
             await HandleAsync(command);
