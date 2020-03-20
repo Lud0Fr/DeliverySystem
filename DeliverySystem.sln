@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeliverySystem.Tests", "Del
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeliverySystem.Api", "DeliverySystem.Api\DeliverySystem.Api.csproj", "{9528A6E5-A206-4C2F-AED1-78317608F463}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeliverySystem.Tools", "DeliverySystem.Tools\DeliverySystem.Tools.csproj", "{97DA4D77-EB4C-4119-86DF-8E01CB01FFBC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeliverySystem.Tools", "DeliverySystem.Tools\DeliverySystem.Tools.csproj", "{97DA4D77-EB4C-4119-86DF-8E01CB01FFBC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeliverySystem.WebWorker", "DeliverySystem.WebWorker\DeliverySystem.WebWorker.csproj", "{38FD76A3-447A-48F6-BC6C-D55D0D4B54F5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{97DA4D77-EB4C-4119-86DF-8E01CB01FFBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97DA4D77-EB4C-4119-86DF-8E01CB01FFBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97DA4D77-EB4C-4119-86DF-8E01CB01FFBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38FD76A3-447A-48F6-BC6C-D55D0D4B54F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38FD76A3-447A-48F6-BC6C-D55D0D4B54F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38FD76A3-447A-48F6-BC6C-D55D0D4B54F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38FD76A3-447A-48F6-BC6C-D55D0D4B54F5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
