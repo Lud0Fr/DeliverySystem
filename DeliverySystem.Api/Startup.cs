@@ -155,6 +155,7 @@ namespace DeliverySystem
         private void ConfigureSpecifications(IServiceCollection services)
         {
             services.AddScoped<IExistsIdentitySpecification, ExistsIdentitySpecification>();
+            services.AddScoped<IExistsDeliverySpecification, ExistsDeliverySpecification>();
         }
 
         private void ConfigureRepositories(IServiceCollection services)

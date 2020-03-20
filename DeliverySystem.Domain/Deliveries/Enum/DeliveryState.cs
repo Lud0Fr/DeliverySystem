@@ -2,10 +2,10 @@
 {
     public enum DeliveryState
     {
-        created = 0,
-        approved = 1,
-        completed = 2,
-        cancelled = 3,
-        expired = 4
+        Created = 0,
+        Approved = 1,
+        Completed = 2,
+        Cancelled = 3,
+        Expired = 4
     }
 }

@@ -22,5 +22,14 @@ namespace DeliverySystem.Api.Controllers
 
             return NoContent();
         }
+
+        [HttpPut("{deliveryId:int}/approve")]
+        [AuthorizeJwtRole(RoleName.UserConsumerMarket)]
+        public async Task<IActionResult> ApproveAsync([FromRoute]int deliveryId)
+        {
+            await HandleAsync(new ApproveDeliveryCommand(deliveryId));
+
+            return NoContent();
+        }
     }
 }

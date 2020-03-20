@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DeliverySystem.Api.CommandHandlers
 {
-    public class CreateDeliveryCommandHandler : AsyncRequestHandler<CreateDeliveryCommand>
+    public class CreateDeliveryCommandHandler : IRequestHandler<CreateDeliveryCommand>
     {
         private readonly IDeliveryRepository _deliveryRepository;
         private readonly IUserContext _userContext;
@@ -24,7 +24,7 @@ namespace DeliverySystem.Api.CommandHandlers
             _unitOfWork = unitOfWork;
         }
 
-        protected override async Task Handle(
+        public async Task<Unit> Handle(
             CreateDeliveryCommand request,
             CancellationToken cancellationToken)
         {
@@ -37,6 +37,8 @@ namespace DeliverySystem.Api.CommandHandlers
                 _userContext.UserDetails.Id));
 
             await _unitOfWork.SaveAllAsync();
+
+            return Unit.Value;
         }
     }
 }

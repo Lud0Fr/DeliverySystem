@@ -27,12 +27,41 @@ namespace DeliverySystem.Domain.Deliveries
                 Order = order,
                 Recipient = recipient,
                 UserId = userId,
-                PartnerId = partnerId
+                PartnerId = partnerId,
+                State = DeliveryState.Created
             };
 
             delivery.New(createdBy);
 
             return delivery;
+        }
+
+        public void Approve(int approvedBy)
+        {
+            State = DeliveryState.Approved;
+
+            Update(approvedBy);
+        }
+
+        public void Complete(int completedBy)
+        {
+            State = DeliveryState.Completed;
+
+            Update(completedBy);
+        }
+
+        public void Cancel(int cancelledBy)
+        {
+            State = DeliveryState.Cancelled;
+
+            Update(cancelledBy);
+        }
+
+        public void Expire()
+        {
+            State = DeliveryState.Expired;
+
+            Update();
         }
     }
 }

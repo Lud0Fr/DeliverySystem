@@ -2,8 +2,11 @@
 {
     public class UserDetails
     {
-        public int Id { get; set; }
-        public Role Role { get; set; }
+        public int Id { get; private set; }
+        public Role Role { get; private set; }
+
+        private UserDetails()
+        { }
 
         public static UserDetails New(
             int id,
