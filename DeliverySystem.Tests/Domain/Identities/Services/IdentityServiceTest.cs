@@ -16,7 +16,7 @@ namespace DeliverySystem.Tests.Domain.Identities.Services
             var sut = new IdentityService(new JwtConfiguration(), Configuration);
             // Act
             var jwt = sut.GenerateJWT(identity);
-            // Asset
+            // Assert
             Assert.NotEmpty(jwt);
             Assert.Equal(3, jwt.Split('.').Length);
         }

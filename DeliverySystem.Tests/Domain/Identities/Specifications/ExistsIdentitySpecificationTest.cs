@@ -13,7 +13,7 @@ namespace DeliverySystem.Tests.Domain.Identities.Specifications
         {
             // Arrange
             var sut = new ExistsIdentitySpecification();
-            // Asset
+            // Assert
             Assert.Throws<ValidationException>(() => sut.EnforceRule(null, It.IsAny<string>()));
         }
 
@@ -24,7 +24,7 @@ namespace DeliverySystem.Tests.Domain.Identities.Specifications
             var sut = new ExistsIdentitySpecification();
             // Act
             var exception = Record.Exception(() => sut.EnforceRule(NewIdentity(), It.IsAny<string>()));
-            // Asset
+            // Assert
             Assert.Null(exception);
         }
 
