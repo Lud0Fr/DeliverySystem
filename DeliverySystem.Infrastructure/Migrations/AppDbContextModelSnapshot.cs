@@ -142,6 +142,8 @@ namespace DeliverySystem.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("PartnerId");
+
                     b.ToTable("Subscribers");
 
                     b.HasData(
@@ -238,7 +240,7 @@ namespace DeliverySystem.Infrastructure.Migrations
 
                             b1.Property<string>("Sender")
                                 .HasColumnName("Sender")
-                                .HasMaxLength(200);
+                                .HasMaxLength(100);
 
                             b1.HasKey("DeliveryId");
 
@@ -265,7 +267,7 @@ namespace DeliverySystem.Infrastructure.Migrations
 
                             b1.Property<string>("Name")
                                 .HasColumnName("RecipientName")
-                                .HasMaxLength(150);
+                                .HasMaxLength(100);
 
                             b1.Property<string>("PhoneNumber")
                                 .HasColumnName("RecipientPhoneNumber")

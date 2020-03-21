@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DeliverySystem.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200321111605_Init")]
+    [Migration("20200321173339_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -144,6 +144,8 @@ namespace DeliverySystem.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("PartnerId");
+
                     b.ToTable("Subscribers");
 
                     b.HasData(
@@ -240,7 +242,7 @@ namespace DeliverySystem.Infrastructure.Migrations
 
                             b1.Property<string>("Sender")
                                 .HasColumnName("Sender")
-                                .HasMaxLength(200);
+                                .HasMaxLength(100);
 
                             b1.HasKey("DeliveryId");
 
@@ -267,7 +269,7 @@ namespace DeliverySystem.Infrastructure.Migrations
 
                             b1.Property<string>("Name")
                                 .HasColumnName("RecipientName")
-                                .HasMaxLength(150);
+                                .HasMaxLength(100);
 
                             b1.Property<string>("PhoneNumber")
                                 .HasColumnName("RecipientPhoneNumber")

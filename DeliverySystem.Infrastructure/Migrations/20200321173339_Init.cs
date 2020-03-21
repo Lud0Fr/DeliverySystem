@@ -22,12 +22,12 @@ namespace DeliverySystem.Infrastructure.Migrations
                     State = table.Column<int>(nullable: false),
                     AccessWindowStart = table.Column<DateTime>(nullable: false),
                     AccessWindowEnd = table.Column<DateTime>(nullable: false),
-                    RecipientName = table.Column<string>(maxLength: 150, nullable: true),
+                    RecipientName = table.Column<string>(maxLength: 100, nullable: true),
                     RecipientAddress = table.Column<string>(nullable: true),
                     RecipientEmail = table.Column<string>(maxLength: 100, nullable: true),
                     RecipientPhoneNumber = table.Column<string>(maxLength: 15, nullable: true),
                     OrderNumber = table.Column<string>(maxLength: 20, nullable: true),
-                    Sender = table.Column<string>(maxLength: 200, nullable: true),
+                    Sender = table.Column<string>(maxLength: 100, nullable: true),
                     UserId = table.Column<int>(nullable: false),
                     PartnerId = table.Column<int>(nullable: false)
                 },
@@ -140,6 +140,11 @@ namespace DeliverySystem.Infrastructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Identities_PartnerId",
                 table: "Identities",
+                column: "PartnerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Subscribers_PartnerId",
+                table: "Subscribers",
                 column: "PartnerId");
 
             migrationBuilder.CreateIndex(
