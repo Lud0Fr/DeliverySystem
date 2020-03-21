@@ -35,7 +35,7 @@ namespace DeliverySystem.WebWorker.TimedHostedServices
             Log.Information("DeliveriesTimedHostedService running.");
 
             _timer = new Timer(
-                (state) => { DoWork(state).GetAwaiter(); },
+                (state) => { ProcessAsync(state).GetAwaiter(); },
                 null,
                 TimeSpan.Zero,
                 TimeSpan.FromSeconds(_period));
@@ -43,7 +43,7 @@ namespace DeliverySystem.WebWorker.TimedHostedServices
             return Task.CompletedTask;
         }
 
-        protected abstract Task DoWork(object state);
+        protected internal abstract Task ProcessAsync(object state);
 
         public Task StopAsync(CancellationToken stoppingToken)
         {

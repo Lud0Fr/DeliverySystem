@@ -3,9 +3,11 @@ using DeliverySystem.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Serilog;
 using System;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
+[assembly: InternalsVisibleTo("DeliverySystem.Tests")]
 namespace DeliverySystem.WebWorker.TimedHostedServices
 {
     public class DeliveriesTimedHostedService : TimedHostedServiceBase
@@ -21,7 +23,7 @@ namespace DeliverySystem.WebWorker.TimedHostedServices
                   "DeliveriesTimedHostedService")
         { }
 
-        protected override async Task DoWork(object state)
+        protected internal override async Task ProcessAsync(object state)
         {
             var count = Interlocked.Increment(ref executionCount);
 

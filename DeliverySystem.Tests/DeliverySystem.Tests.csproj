@@ -10,6 +10,7 @@
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.2" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.2" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.IdentityModel.JsonWebTokens" Version="5.6.0" />
     <PackageReference Include="Microsoft.IdentityModel.Logging" Version="5.6.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
@@ -21,6 +22,7 @@
   <ItemGroup>
     <ProjectReference Include="..\DeliverySystem.Api\DeliverySystem.Api.csproj" />
     <ProjectReference Include="..\DeliverySystem.Domain\DeliverySystem.Domain.csproj" />
+    <ProjectReference Include="..\DeliverySystem.WebWorker\DeliverySystem.WebWorker.csproj" />
   </ItemGroup>
 
   <ItemGroup>
