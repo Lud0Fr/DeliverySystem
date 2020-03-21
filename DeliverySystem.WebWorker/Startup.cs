@@ -1,4 +1,7 @@
-﻿using DeliverySystem.Domain.Deliveries;
+﻿using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using DeliverySystem.Domain.Deliveries;
+using DeliverySystem.Domain.Subscribers;
 using DeliverySystem.Infrastructure;
 using DeliverySystem.Infrastructure.Repositories;
 using DeliverySystem.Tools.Domain;
@@ -12,7 +15,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using System;
-using System.Reflection;
 
 namespace DeliverySystem.WebWorker
 {
@@ -33,22 +35,19 @@ namespace DeliverySystem.WebWorker
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
-            services.AddMediatR();
-
-            services.AddSingleton<IEventBus, EventBus>();
-            services.AddSingleton<IUnitOfWork, UnitOfWork>();
-            services.AddSingleton<IDeliveryRepository, DeliveryRepository>();
             services.AddHostedService<DeliveriesTimedHostedService>();
+            services.AddMediatR();
 
             services.AddDbContext<AppDbContext>(option =>
             {
                 option = new DbContextOptionsBuilder<AppDbContext>()
                     .UseSqlServer(Configuration.GetConnectionString("AppEntities"));
             }, ServiceLifetime.Singleton);
+
+            return ConfigureAutofac(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -65,6 +64,27 @@ namespace DeliverySystem.WebWorker
 
             app.UseHttpsRedirection();
             app.UseMvc();
+        }
+
+        private AutofacServiceProvider ConfigureAutofac(IServiceCollection services)
+        {
+            services.AddAutofac();
+
+            var builder = new ContainerBuilder();
+
+            builder.RegisterType<EventBus>().As<IEventBus>();
+            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
+            builder.RegisterType<DeliveryRepository>().As<IDeliveryRepository>();
+            builder.RegisterType<SubscriberRepository>().As<ISubscriberRepository>();
+            builder.RegisterType<SubscriptionService>().As<ISubscriptionService>();
+            builder.RegisterType<DeliveryEventHandler>().As<INotificationHandler<DeliveryCreatedEvent>>();
+            builder.RegisterType<DeliveryEventHandler>().As<INotificationHandler<DeliveryStateChangedEvent>>();
+
+            builder.Populate(services);
+
+            var container = builder.Build();
+
+            return new AutofacServiceProvider(container);
         }
     }
 }

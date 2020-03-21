@@ -1,5 +1,11 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using DeliverySystem.Domain.Deliveries;
+using DeliverySystem.Domain.Subscribers;
+using DeliverySystem.Infrastructure;
+using DeliverySystem.Infrastructure.Repositories;
+using DeliverySystem.Tools.Domain;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace DeliverySystem.Tests
 {
@@ -21,9 +27,12 @@ namespace DeliverySystem.Tests
             }
         }
 
+        public IServiceProvider ServiceProvider { get; }
+
         public TestBase()
         {
-            IServiceCollection services = new ServiceCollection();
+            var services = new ServiceCollection();
+            ServiceProvider = services.BuildServiceProvider();
 
             services.AddSingleton(Configuration);
         }

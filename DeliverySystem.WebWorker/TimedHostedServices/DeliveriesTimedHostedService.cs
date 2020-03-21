@@ -12,16 +12,18 @@ namespace DeliverySystem.WebWorker.TimedHostedServices
 {
     public class DeliveriesTimedHostedService : TimedHostedServiceBase
     {
+        private readonly IDeliveryRepository _deliveryRepository;
+        private readonly IUnitOfWork _unitOfWork;
+
         public DeliveriesTimedHostedService(
             IConfiguration configuration,
             IDeliveryRepository deliveryRepository,
             IUnitOfWork unitOfWork)
-            : base(
-                  configuration,
-                  deliveryRepository,
-                  unitOfWork,
-                  "DeliveriesTimedHostedService")
-        { }
+            : base(configuration, "DeliveriesTimedHostedService")
+        {
+            _deliveryRepository = deliveryRepository;
+            _unitOfWork = unitOfWork;
+        }
 
         protected internal override async Task ProcessAsync(object state)
         {

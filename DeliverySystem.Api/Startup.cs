@@ -59,7 +59,6 @@ namespace DeliverySystem
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddFluentValidation();
 
-
             ConfigureAuthenticationAndAuthorization(services);
             ConfigureSecurity(services);
             ConfigureAutoMapper(services);

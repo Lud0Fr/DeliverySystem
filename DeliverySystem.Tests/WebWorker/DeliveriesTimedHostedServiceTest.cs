@@ -16,7 +16,7 @@ namespace DeliverySystem.Tests.WebWorker
         private readonly Mock<IUnitOfWork> _unitOfWork;
 
         public DeliveriesTimedHostedServiceTest()
-        {
+        { 
             _deliveryRepository = new Mock<IDeliveryRepository>();
             _unitOfWork = new Mock<IUnitOfWork>();
         }

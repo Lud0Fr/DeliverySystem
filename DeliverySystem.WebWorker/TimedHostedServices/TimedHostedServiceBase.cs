@@ -1,6 +1,4 @@
-﻿using DeliverySystem.Domain.Deliveries;
-using DeliverySystem.Infrastructure;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using System;
@@ -15,18 +13,12 @@ namespace DeliverySystem.WebWorker.TimedHostedServices
         protected Timer _timer;
         protected double _period;
         protected readonly IConfiguration _configuration;
-        protected readonly IDeliveryRepository _deliveryRepository;
-        protected readonly IUnitOfWork _unitOfWork;
 
         public TimedHostedServiceBase(
             IConfiguration configuration,
-            IDeliveryRepository deliveryRepository,
-            IUnitOfWork unitOfWork,
             string timedHostedServiceCOnfiguration)
         {
             _configuration = configuration;
-            _deliveryRepository = deliveryRepository;
-            _unitOfWork = unitOfWork;
             _period = Convert.ToDouble(_configuration.GetSection($"{timedHostedServiceCOnfiguration}:Period").Value);
         }
 
