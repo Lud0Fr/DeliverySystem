@@ -49,7 +49,9 @@ namespace DeliverySystem.Infrastructure.Migrations
                     IsDeleted = table.Column<bool>(nullable: false),
                     Email = table.Column<string>(nullable: true),
                     PasswordHash = table.Column<string>(nullable: true),
-                    Role = table.Column<int>(nullable: false)
+                    Role = table.Column<int>(nullable: false),
+                    UserConsumerMarketId = table.Column<int>(nullable: true),
+                    PartnerId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -58,18 +60,18 @@ namespace DeliverySystem.Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "Identities",
-                columns: new[] { "Id", "CreatedBy", "Email", "IsDeleted", "PasswordHash", "Role", "UpdatedAt", "UpdatedBy" },
-                values: new object[] { 1, null, "admin@admin.com", false, "5BAA61E4C9B93F3F0682250B6CF8331B7EE68FD8", 0, null, null });
+                columns: new[] { "Id", "CreatedBy", "Email", "IsDeleted", "PartnerId", "PasswordHash", "Role", "UpdatedAt", "UpdatedBy", "UserConsumerMarketId" },
+                values: new object[] { 1, null, "admin@admin.com", false, null, "5BAA61E4C9B93F3F0682250B6CF8331B7EE68FD8", 0, null, null, null });
 
             migrationBuilder.InsertData(
                 table: "Identities",
-                columns: new[] { "Id", "CreatedBy", "Email", "IsDeleted", "PasswordHash", "Role", "UpdatedAt", "UpdatedBy" },
-                values: new object[] { 2, null, "partner@partner.com", false, "5BAA61E4C9B93F3F0682250B6CF8331B7EE68FD8", 2, null, null });
+                columns: new[] { "Id", "CreatedBy", "Email", "IsDeleted", "PartnerId", "PasswordHash", "Role", "UpdatedAt", "UpdatedBy", "UserConsumerMarketId" },
+                values: new object[] { 2, null, "partner@partner.com", false, 222, "5BAA61E4C9B93F3F0682250B6CF8331B7EE68FD8", 2, null, null, null });
 
             migrationBuilder.InsertData(
                 table: "Identities",
-                columns: new[] { "Id", "CreatedBy", "Email", "IsDeleted", "PasswordHash", "Role", "UpdatedAt", "UpdatedBy" },
-                values: new object[] { 3, null, "user@user.com", false, "5BAA61E4C9B93F3F0682250B6CF8331B7EE68FD8", 1, null, null });
+                columns: new[] { "Id", "CreatedBy", "Email", "IsDeleted", "PartnerId", "PasswordHash", "Role", "UpdatedAt", "UpdatedBy", "UserConsumerMarketId" },
+                values: new object[] { 3, null, "user@user.com", false, null, "5BAA61E4C9B93F3F0682250B6CF8331B7EE68FD8", 1, null, null, 333 });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

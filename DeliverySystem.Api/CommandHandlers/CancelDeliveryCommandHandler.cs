@@ -46,8 +46,8 @@ namespace DeliverySystem.Api.CommandHandlers
             var delivery = await _deliveryRepository.GetAsync(d =>
                 d.Id == deliveryId &&
                 _userContext.UserDetails.Role == Role.Partner
-                    ? d.PartnerId == _userContext.UserDetails.Id
-                    : d.UserId == _userContext.UserDetails.Id &&
+                    ? d.PartnerId == _userContext.UserDetails.PartnerId
+                    : d.UserId == _userContext.UserDetails.UserConsumerMarketId &&
                 (d.State == DeliveryState.Created ||
                 d.State == DeliveryState.Approved));
 

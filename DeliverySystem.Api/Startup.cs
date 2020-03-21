@@ -130,8 +130,6 @@ namespace DeliverySystem
             {
                 options.AddPolicy(UserRolesRequirement.PolicyKey, policy => policy.Requirements.Add(new UserRolesRequirement()));
             });
-
-            services.AddSingleton<IAuthorizationHandler, UserRolesRequirementHandler>();
         }
 
         private void ConfigureSecurity(IServiceCollection services)
@@ -140,7 +138,8 @@ namespace DeliverySystem
             Configuration.Bind("JWT", jwtConfig);
             services.AddSingleton(jwtConfig);
 
-            services.AddSingleton<IUserContext, UserContext>();
+            services.AddScoped<IAuthorizationHandler, UserRolesRequirementHandler>();
+            services.AddScoped<IUserContext, UserContext>();
         }
 
         private void ConfigureDomainEvents(IServiceCollection services)

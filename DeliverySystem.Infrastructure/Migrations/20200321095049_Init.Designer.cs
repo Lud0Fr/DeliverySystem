@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DeliverySystem.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200320213554_Init")]
+    [Migration("20200321095049_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -66,6 +66,8 @@ namespace DeliverySystem.Infrastructure.Migrations
 
                     b.Property<bool>("IsDeleted");
 
+                    b.Property<int?>("PartnerId");
+
                     b.Property<string>("PasswordHash");
 
                     b.Property<int>("Role");
@@ -73,6 +75,8 @@ namespace DeliverySystem.Infrastructure.Migrations
                     b.Property<DateTime?>("UpdatedAt");
 
                     b.Property<int?>("UpdatedBy");
+
+                    b.Property<int?>("UserConsumerMarketId");
 
                     b.HasKey("Id");
 
@@ -94,6 +98,7 @@ namespace DeliverySystem.Infrastructure.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "partner@partner.com",
                             IsDeleted = false,
+                            PartnerId = 222,
                             PasswordHash = "5BAA61E4C9B93F3F0682250B6CF8331B7EE68FD8",
                             Role = 2
                         },
@@ -104,7 +109,8 @@ namespace DeliverySystem.Infrastructure.Migrations
                             Email = "user@user.com",
                             IsDeleted = false,
                             PasswordHash = "5BAA61E4C9B93F3F0682250B6CF8331B7EE68FD8",
-                            Role = 1
+                            Role = 1,
+                            UserConsumerMarketId = 333
                         });
                 });
 

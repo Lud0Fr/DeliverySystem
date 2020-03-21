@@ -46,7 +46,7 @@ namespace DeliverySystem.Api.CommandHandlers
         {
             var delivery = await _deliveryRepository.GetAsync(d =>
                 d.Id == deliveryId &&
-                d.UserId == _userContext.UserDetails.Id &&
+                d.UserId == _userContext.UserDetails.UserConsumerMarketId &&
                 d.State == DeliveryState.Created &&
                 d.AccessWindow.StartTime > DateTime.UtcNow);
 

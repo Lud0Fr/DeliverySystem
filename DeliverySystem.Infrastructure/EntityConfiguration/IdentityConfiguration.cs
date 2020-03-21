@@ -18,8 +18,8 @@ namespace DeliverySystem.Infrastructure.EntityConfiguration
         private IEnumerable<Identity> DefaultIdentities()
         {
             yield return Identity.New("admin@admin.com", "password", Role.Admin).WithId(1);
-            yield return Identity.New("partner@partner.com", "password", Role.Partner).WithId(2);
-            yield return Identity.New("user@user.com", "password", Role.UserConsumerMarket).WithId(3);
+            yield return Identity.New("partner@partner.com", "password", Role.Partner, null, 222).WithId(2);
+            yield return Identity.New("user@user.com", "password", Role.UserConsumerMarket, 333, null).WithId(3);
         }
     }
 }

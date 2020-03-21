@@ -1,4 +1,5 @@
 ﻿using DeliverySystem.Tools;
+using DeliverySystem.Tools.Security;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
@@ -35,7 +36,11 @@ namespace DeliverySystem.Domain.Identities.Services
 
         public string GenerateJWT(Identity identity)
         {
-            var userDetails = new { identity.Id, identity.Role };
+            var userDetails = UserDetails.New(
+                identity.Id,
+                identity.Role,
+                identity.UserConsumerMarketId,
+                identity.PartnerId);
 
             var claims = new List<Claim>
             {

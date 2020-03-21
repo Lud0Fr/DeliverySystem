@@ -45,7 +45,7 @@ namespace DeliverySystem.Api.CommandHandlers
         {
             var delivery = await _deliveryRepository.GetAsync(d =>
                 d.Id == deliveryId &&
-                d.PartnerId == _userContext.UserDetails.Id &&
+                d.PartnerId == _userContext.UserDetails.PartnerId &&
                 d.State == DeliveryState.Approved);
 
             _existsDelivery.EnforceRule(delivery, $"Delivery with id {deliveryId} not found");

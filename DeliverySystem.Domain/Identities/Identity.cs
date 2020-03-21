@@ -9,6 +9,8 @@ namespace DeliverySystem.Domain.Identities
         public string Email { get; private set; }
         public string PasswordHash { get; private set; }
         public Role Role { get; private set; }
+        public int? UserConsumerMarketId { get; private set; }
+        public int? PartnerId { get; private set; }
 
         private Identity()
         { }
@@ -16,15 +18,20 @@ namespace DeliverySystem.Domain.Identities
         public static Identity New(
             string email,
             string password,
-            Role role)
+            Role role,
+            int? userConsumerMarketId = null,
+            int? partnerId = null)
         {
             return new Identity
             {
                 Email = email,
                 PasswordHash = password.ComputeSHA1(),
                 Role = role,
+                UserConsumerMarketId = userConsumerMarketId,
+                PartnerId = partnerId
             };
         }
+
         public Identity WithId(int id)
         {
             Id = id;

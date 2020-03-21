@@ -1,5 +1,4 @@
-﻿using System;
-using DeliverySystem.Tools.Domain;
+﻿using DeliverySystem.Tools.Domain;
 
 namespace DeliverySystem.Domain.Deliveries
 {
@@ -33,6 +32,8 @@ namespace DeliverySystem.Domain.Deliveries
             };
 
             delivery.New(createdBy);
+
+            delivery.ApplyEvent(new DeliveryCreatedEvent(delivery));
 
             return delivery;
         }
