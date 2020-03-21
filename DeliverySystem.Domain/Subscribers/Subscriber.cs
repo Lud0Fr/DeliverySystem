@@ -31,6 +31,11 @@ namespace DeliverySystem.Domain.Subscribers
             Subscription subscription,
             int addedBy)
         {
+            if (Subscriptions == null)
+            {
+                Subscriptions = new List<Subscription>();
+            }
+
             Subscriptions.Add(subscription);
 
             Update(addedBy);

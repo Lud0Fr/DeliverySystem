@@ -43,6 +43,8 @@ namespace DeliverySystem.Domain.Deliveries
             State = DeliveryState.Approved;
 
             Update(approvedBy);
+
+            ApplyEvent(new DeliveryStateChangedEvent(Id, PartnerId, State, UpdatedAt.Value));
         }
 
         public void Complete(int completedBy)
@@ -50,6 +52,8 @@ namespace DeliverySystem.Domain.Deliveries
             State = DeliveryState.Completed;
 
             Update(completedBy);
+
+            ApplyEvent(new DeliveryStateChangedEvent(Id, PartnerId, State, UpdatedAt.Value));
         }
 
         public void Cancel(int cancelledBy)
@@ -64,6 +68,8 @@ namespace DeliverySystem.Domain.Deliveries
             State = DeliveryState.Expired;
 
             Update();
+
+            ApplyEvent(new DeliveryStateChangedEvent(Id, PartnerId, State, UpdatedAt.Value));
         }
     }
 }

@@ -16,6 +16,8 @@ namespace DeliverySystem.Infrastructure.EntityConfiguration
                 .WithOne()
                 .HasForeignKey(s => s.SubscriberId);
 
+            builder.HasIndex(s => s.PartnerId);
+
             builder.HasData(DefaultSusbcribers());
         }
 

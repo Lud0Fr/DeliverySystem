@@ -6,10 +6,12 @@ using DeliverySystem.Api.Queries;
 using DeliverySystem.Domain.Deliveries;
 using DeliverySystem.Domain.Identities;
 using DeliverySystem.Domain.Identities.Services;
+using DeliverySystem.Domain.Subscribers;
 using DeliverySystem.Infrastructure;
 using DeliverySystem.Infrastructure.Repositories;
 using DeliverySystem.Tools;
 using DeliverySystem.Tools.Domain;
+using DeliverySystem.Tools.Middleware;
 using DeliverySystem.Tools.Security;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -68,7 +70,7 @@ namespace DeliverySystem
             ConfigureRepositories(services);
             ConfigureSpecifications(services);
 
-            services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddMediatR();
 
             ConfigureDbContext(services);
         }
@@ -86,6 +88,8 @@ namespace DeliverySystem
             }
 
             app.UseHttpsRedirection();
+            app.UseAuthentication();
+            app.UseMiddleware(typeof(ErrorHandlingMiddleware));
             app.UseMvc();
         }
 
@@ -150,6 +154,7 @@ namespace DeliverySystem
         private void ConfigureDomainServices(IServiceCollection services)
         {
             services.AddScoped<IIdentityService, IdentityService>();
+            services.AddScoped<ISubscriptionService, SubscriptionService>();
         }
 
         private void ConfigureValidators(IServiceCollection services)
@@ -169,6 +174,7 @@ namespace DeliverySystem
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IIdentityRepository, IdentityRepository>();
             services.AddScoped<IDeliveryRepository, DeliveryRepository>();
+            services.AddScoped<ISubscriberRepository, SubscriberRepository>();
         }
 
         private void ConfigureDbContext(IServiceCollection services)

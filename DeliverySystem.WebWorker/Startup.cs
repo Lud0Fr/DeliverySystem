@@ -37,7 +37,7 @@ namespace DeliverySystem.WebWorker
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddMediatR();
 
             services.AddSingleton<IEventBus, EventBus>();
             services.AddSingleton<IUnitOfWork, UnitOfWork>();

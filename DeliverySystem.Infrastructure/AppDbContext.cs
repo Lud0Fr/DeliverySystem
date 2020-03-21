@@ -1,5 +1,4 @@
-﻿using DeliverySystem.Domain.Deliveries;
-using DeliverySystem.Domain.Identities;
+﻿using DeliverySystem.Domain.Identities;
 using DeliverySystem.Domain.Subscribers;
 using DeliverySystem.Infrastructure.EntityConfiguration;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +11,7 @@ namespace DeliverySystem.Infrastructure
         private readonly IConfiguration _configuration;
 
         public DbSet<Identity> Identities { get; set; }
-        public DbSet<Delivery> Deliveries { get; set; }
+        public DbSet<Domain.Deliveries.Delivery> Deliveries { get; set; }
         public DbSet<Subscriber> Subscribers { get; set; }
         public DbSet<Subscription> Subscriptions { get; set; }
 
