@@ -1,5 +1,6 @@
 ﻿using DeliverySystem.Domain.Deliveries;
 using DeliverySystem.Domain.Identities;
+using DeliverySystem.Domain.Subscribers;
 using DeliverySystem.Infrastructure.EntityConfiguration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -12,6 +13,8 @@ namespace DeliverySystem.Infrastructure
 
         public DbSet<Identity> Identities { get; set; }
         public DbSet<Delivery> Deliveries { get; set; }
+        public DbSet<Subscriber> Subscribers { get; set; }
+        public DbSet<Subscription> Subscriptions { get; set; }
 
         public AppDbContext(
             DbContextOptions dbContextOptions,
@@ -26,6 +29,8 @@ namespace DeliverySystem.Infrastructure
             // Configurations
             modelBuilder.ApplyConfiguration(new IdentityConfiguration());
             modelBuilder.ApplyConfiguration(new DeliveryConfiguration());
+            modelBuilder.ApplyConfiguration(new SubscriberConfiguration());
+            modelBuilder.ApplyConfiguration(new SubscriptionConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }

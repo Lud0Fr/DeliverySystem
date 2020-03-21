@@ -12,6 +12,12 @@ namespace DeliverySystem.Infrastructure.EntityConfiguration
         {
             builder.ToTable("Identities");
 
+            builder.Property(i => i.Email).HasMaxLength(100);
+            builder.Property(i => i.PartnerId).HasMaxLength(20);
+
+            builder.HasIndex(i => i.Email);
+            builder.HasIndex(i => i.PartnerId);
+
             builder.HasData(DefaultIdentities());
         }
 

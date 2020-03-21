@@ -16,13 +16,13 @@ namespace DeliverySystem.Infrastructure.EntityConfiguration
 
             var recipient = builder.OwnsOne(d => d.Recipient);
             recipient.Property(r => r.Address).HasColumnName("RecipientAddress");
-            recipient.Property(r => r.Email).HasColumnName("RecipientEmail");
-            recipient.Property(r => r.Name).HasColumnName("RecipientName");
-            recipient.Property(r => r.PhoneNumber).HasColumnName("RecipientPhoneNumber");
+            recipient.Property(r => r.Email).HasColumnName("RecipientEmail").HasMaxLength(100);
+            recipient.Property(r => r.Name).HasColumnName("RecipientName").HasMaxLength(150);
+            recipient.Property(r => r.PhoneNumber).HasColumnName("RecipientPhoneNumber").HasMaxLength(15);
 
             var order = builder.OwnsOne(d => d.Order);
-            order.Property(o => o.OrderNumber).HasColumnName("OrderNumber");
-            order.Property(o => o.Sender).HasColumnName("Sender");
+            order.Property(o => o.OrderNumber).HasColumnName("OrderNumber").HasMaxLength(20);
+            order.Property(o => o.Sender).HasColumnName("Sender").HasMaxLength(200);
         }
     }
 }

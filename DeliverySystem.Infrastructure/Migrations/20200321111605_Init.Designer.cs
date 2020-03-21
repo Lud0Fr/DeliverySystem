@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DeliverySystem.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200321095049_Init")]
+    [Migration("20200321111605_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -62,11 +62,13 @@ namespace DeliverySystem.Infrastructure.Migrations
 
                     b.Property<int?>("CreatedBy");
 
-                    b.Property<string>("Email");
+                    b.Property<string>("Email")
+                        .HasMaxLength(100);
 
                     b.Property<bool>("IsDeleted");
 
-                    b.Property<int?>("PartnerId");
+                    b.Property<int?>("PartnerId")
+                        .HasMaxLength(20);
 
                     b.Property<string>("PasswordHash");
 
@@ -79,6 +81,10 @@ namespace DeliverySystem.Infrastructure.Migrations
                     b.Property<int?>("UserConsumerMarketId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Email");
+
+                    b.HasIndex("PartnerId");
 
                     b.ToTable("Identities");
 
@@ -114,6 +120,90 @@ namespace DeliverySystem.Infrastructure.Migrations
                         });
                 });
 
+            modelBuilder.Entity("DeliverySystem.Domain.Subscribers.Subscriber", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<int?>("CreatedBy");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<string>("NotificationUrl");
+
+                    b.Property<int>("PartnerId");
+
+                    b.Property<DateTime?>("UpdatedAt");
+
+                    b.Property<int?>("UpdatedBy");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Subscribers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            NotificationUrl = "https://partner222.com/webhooks",
+                            PartnerId = 222
+                        });
+                });
+
+            modelBuilder.Entity("DeliverySystem.Domain.Subscribers.Subscription", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<int?>("CreatedBy");
+
+                    b.Property<int>("EventType");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<int>("SubscriberId");
+
+                    b.Property<DateTime?>("UpdatedAt");
+
+                    b.Property<int?>("UpdatedBy");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SubscriberId");
+
+                    b.ToTable("Subscriptions");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EventType = 0,
+                            IsDeleted = false,
+                            SubscriberId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EventType = 1,
+                            IsDeleted = false,
+                            SubscriberId = 1
+                        });
+                });
+
             modelBuilder.Entity("DeliverySystem.Domain.Deliveries.Delivery", b =>
                 {
                     b.OwnsOne("DeliverySystem.Domain.Deliveries.AccessWindow", "AccessWindow", b1 =>
@@ -145,10 +235,12 @@ namespace DeliverySystem.Infrastructure.Migrations
                                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                             b1.Property<string>("OrderNumber")
-                                .HasColumnName("OrderNumber");
+                                .HasColumnName("OrderNumber")
+                                .HasMaxLength(20);
 
                             b1.Property<string>("Sender")
-                                .HasColumnName("Sender");
+                                .HasColumnName("Sender")
+                                .HasMaxLength(200);
 
                             b1.HasKey("DeliveryId");
 
@@ -170,13 +262,16 @@ namespace DeliverySystem.Infrastructure.Migrations
                                 .HasColumnName("RecipientAddress");
 
                             b1.Property<string>("Email")
-                                .HasColumnName("RecipientEmail");
+                                .HasColumnName("RecipientEmail")
+                                .HasMaxLength(100);
 
                             b1.Property<string>("Name")
-                                .HasColumnName("RecipientName");
+                                .HasColumnName("RecipientName")
+                                .HasMaxLength(150);
 
                             b1.Property<string>("PhoneNumber")
-                                .HasColumnName("RecipientPhoneNumber");
+                                .HasColumnName("RecipientPhoneNumber")
+                                .HasMaxLength(15);
 
                             b1.HasKey("DeliveryId");
 
@@ -187,6 +282,14 @@ namespace DeliverySystem.Infrastructure.Migrations
                                 .HasForeignKey("DeliverySystem.Domain.Deliveries.Recipient", "DeliveryId")
                                 .OnDelete(DeleteBehavior.Cascade);
                         });
+                });
+
+            modelBuilder.Entity("DeliverySystem.Domain.Subscribers.Subscription", b =>
+                {
+                    b.HasOne("DeliverySystem.Domain.Subscribers.Subscriber")
+                        .WithMany("Subscriptions")
+                        .HasForeignKey("SubscriberId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }
