@@ -61,6 +61,8 @@ namespace DeliverySystem.Domain.Deliveries
             State = DeliveryState.Cancelled;
 
             Update(cancelledBy);
+
+            ApplyEvent(new DeliveryStateChangedEvent(Id, PartnerId, State, UpdatedAt.Value));
         }
 
         public void Expire()
